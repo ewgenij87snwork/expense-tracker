@@ -15,13 +15,13 @@ calculateBalance();
 function calculateBalance() {
   // Clear DOM
   listTransactionsEl.innerHTML = '';
-  incomeEl.innerHTML = '$0.00';
-  expenseEl.innerHTML = '$0.00';
-  balanceEl.innerHTML = '$0.00';
+  incomeEl.innerHTML = '0.00 UAH';
+  expenseEl.innerHTML = '0.00 UAH';
+  balanceEl.innerHTML = '0.00 UAH';
 
   // Take DATA from LocalStorage
   const historyLocal = JSON.parse(localStorage.getItem('history'));
-  if (historyLocal !== null && historyLocal.length > 0) {
+  if (historyLocal && historyLocal.length) {
     history = historyLocal;
   } else {
     return false;
@@ -44,7 +44,7 @@ function calculateBalance() {
   const expenceSumm = expense.reduce(
     (acc, item) => (acc += +item.amountTransaction),
     0
-  )
+  );
   expenseEl.innerText = `${formatNumber(expenceSumm)} uah`;
 
   // Button Element for Remove Transaction
@@ -62,34 +62,24 @@ function calculateBalance() {
   // Update in DOM a List of Transaction
   listTransactionsEl.innerHTML = history
     .map((item) => {
-      const amount = +item.amountTransaction
-      if (amount >= 0) {
-        // Income Transaction
-        return `
-        <li class="positive list-item" dataID ="${history.indexOf(item)}">
-        ${item.nameTransaction}
-        <span>${formatNumber(amount)} UAH</span>
-        ${removeBtn(item.id)}
-        </li>
-        `;
-      } else {
-        // Expense Transaction
-        return `
-          <li class="negative list-item" dataID ="${history.indexOf(item)}">
-            ${item.nameTransaction}
-            <span>${formatNumber(amount)} UAH</span>
-            ${removeBtn(item.id)}
-          </li>
-        `;
-      }
-    })
+      const amount = +item.amountTransaction;
 
+      return `
+      <li class="${
+        amount >= 0 ? 'positive' : 'negative'
+      } list-item" dataID ="${history.indexOf(item)}">
+      ${item.nameTransaction}
+      <span>${formatNumber(amount)} UAH</span>
+      ${removeBtn(item.id)}
+      </li>
+      `;
+    })
     .join('');
 }
 
-// Format number as currency string 
+// Format number as currency string
 function formatNumber(number) {
-  return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ')
+  return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ');
 }
 
 // Recieve Name and Amount Transaction
@@ -99,16 +89,13 @@ function newTransaction(e) {
 
   let transaction = {};
 
-  if (nameTransactionEl.value !== '' && amountTransactionEl.value !== '') {
+  if (nameTransactionEl.value && amountTransactionEl.value) {
     transaction = {
       id: randomID(),
       nameTransaction: nameTransactionEl.value,
       amountTransaction: amountTransactionEl.value,
     };
 
-    function randomID() {
-      return Math.floor(Math.random() * 100000000);
-    }
     history.push(transaction);
 
     localStorage.setItem('history', JSON.stringify(history));
@@ -121,6 +108,10 @@ function newTransaction(e) {
   amountTransactionEl.value = '';
 }
 
+// Make random ID
+function randomID() {
+  return Math.floor(Math.random() * 100000000);
+}
 //  Delete Transaction
 function deleteTransaction(id) {
   history = history.filter((item) => item.id !== id);

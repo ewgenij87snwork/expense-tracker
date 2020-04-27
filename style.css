@@ -118,11 +118,11 @@ history-container
   font-size: 120%;
 }
 
-.history-container ul li.positive {
+.history-container .positive {
   border-right: 6px solid rgb(17, 182, 85);
 }
 
-.history-container ul li.negative {
+.history-container .negative {
   border-right: 6px solid rgb(167, 2, 2);
 }
 
