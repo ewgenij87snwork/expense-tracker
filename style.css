@@ -48,7 +48,8 @@ head-container
 
 .balance-number {
   margin: 0;
-  font-size: 30px;
+  font-size: 26px;
+  font-weight: bold;
 }
 
 .in-exp {

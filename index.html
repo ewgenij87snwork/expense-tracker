@@ -13,7 +13,7 @@
         <h1>Expense Tracker</h1>
         <div class="balance">
           <h4>Your balance</h4>
-          <h2 id="balance" class="balance-number">0.00 UAH</h2>
+          <p id="balance" class="balance-number">0.00 UAH</p>
         </div>
         <div class="in-exp">
           <div class="income">
@@ -37,11 +37,14 @@
       <div class="form-container">
         <h2 class="title">Add new transaction</h2>
         <form id="submit">
-          <label for="text-transaction">Text</label>
+          <label for="text-transaction">Title</label>
           <input
             type="text"
             id="name-transaction"
             placeholder="Enter text..."
+            autofocus
+            minlength="4"
+            maxlength="25"
           />
           <label for="amount-transaction"
             >Amount (negative - expense, positive - income)</label

@@ -122,3 +122,10 @@ function deleteTransaction(id) {
 // ----------BEGIN FROM THIS LISTENER-------------
 // Event Listener
 addTransactionBtn.addEventListener('click', newTransaction);
+
+// Limit for Input Number
+amountTransactionEl.addEventListener(
+  'input',
+  (e) =>
+    e.target.value.length > 7 && (e.target.value = e.target.value.substr(0, 7))
+);
